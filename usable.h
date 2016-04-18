@@ -6,11 +6,12 @@
 class Usable : public Tile
 {
 public:
-    Usable(std::vector<Tile> list, std::string couleur);
+    Usable(std::vector<int> list, std::string couleur);
     Usable(std::string couleur);
-    std::vector<Tile> getTarget();
+    std::vector<int> getTarget();
+    void setTarget(std::vector<int> t);
 private:
-    std::vector<Tile> target;
+    std::vector<int> target;
 };
 
 #endif // USABLE_H

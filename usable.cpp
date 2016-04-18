@@ -1,6 +1,6 @@
 #include "usable.h"
 
-Usable::Usable(std::vector<Tile> list, std::string couleur)
+Usable::Usable(std::vector<int> list, std::string couleur)
     : Tile(true,true,"Useable",couleur)
 {
     for(int i = 0; i < list.size(); i++)
@@ -9,4 +9,8 @@ Usable::Usable(std::vector<Tile> list, std::string couleur)
 Usable::Usable(std::string couleur)
     : Tile(true,true,"Useable",couleur)
 {}
-std::vector<Tile> Usable::getTarget(){ return target;}
+std::vector<int> Usable::getTarget(){ return target;}
+
+void Usable::setTarget(std::vector<int> t){
+    target = t;
+}

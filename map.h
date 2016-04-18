@@ -7,6 +7,7 @@
 #include "objectif.h"
 #include <fstream>
 #include <iostream>
+#include <map>
 
 class map
 {
