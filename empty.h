@@ -5,7 +5,7 @@
 class Empty : public Tile
 {
 public:
-    Empty();
+    Empty(std::string couleur);
 };
 
 #endif // EMPTY_H

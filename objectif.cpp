@@ -1,6 +1,6 @@
 #include "objectif.h"
 
-Objectif::Objectif() : Tile(true,true,"Objectif")
+Objectif::Objectif(std::string couleur) : Tile(true,true,"Objectif",couleur)
 {
 
 }

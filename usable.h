@@ -6,7 +6,8 @@
 class Usable : public Tile
 {
 public:
-    Usable(std::vector<Tile> list);
+    Usable(std::vector<Tile> list, std::string couleur);
+    Usable(std::string couleur);
     std::vector<Tile> getTarget();
 private:
     std::vector<Tile> target;

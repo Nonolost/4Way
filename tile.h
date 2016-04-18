@@ -6,11 +6,12 @@ class Tile
 {
 public:
     Tile();
-    Tile(bool m, bool u, std::string t);
+    Tile(bool m, bool u, std::string t,std::string couleur);
     bool canUse();
     bool canMove();
 private:
     std::string type;
+    std::string couleur;
     bool move;
     bool use;
 };

@@ -5,7 +5,7 @@
 class Wall : public Tile
 {
 public:
-    Wall();
+    Wall(std::string couleur);
 };
 
 #endif // WALL_H

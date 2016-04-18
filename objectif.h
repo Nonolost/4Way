@@ -5,7 +5,7 @@
 class Objectif : public Tile
 {
 public:
-    Objectif();
+    Objectif(std::string couleur);
 };
 
 #endif // OBJECTIF_H

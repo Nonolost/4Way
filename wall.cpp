@@ -1,6 +1,6 @@
 #include "wall.h"
 
-Wall::Wall() :Tile(false,false,"Wall")
+Wall::Wall(std::string couleur) :Tile(false,false,"Wall",couleur)
 {
 
 }

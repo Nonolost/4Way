@@ -1,3 +1,3 @@
 #include "empty.h"
 
-Empty::Empty(): Tile(true,false,"Empty") {}
+Empty::Empty(std::string couleur): Tile(true,false,"Empty",couleur) {}
