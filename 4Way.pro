@@ -7,7 +7,10 @@ SOURCES += \
     wall.cpp \
     empty.cpp \
     usable.cpp \
-    objectif.cpp
+    objectif.cpp \
+    mainwindow.cpp \
+    game.cpp \
+    position.cpp
 
 HEADERS += \
     map.h \
@@ -15,7 +18,13 @@ HEADERS += \
     wall.h \
     empty.h \
     usable.h \
-    objectif.h
+    objectif.h \
+    mainwindow.h \
+    game.h \
+    position.h
 
 DISTFILES += \
     plateau.txt
+
+FORMS += \
+    mainwindow.ui

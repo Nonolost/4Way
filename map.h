@@ -9,10 +9,10 @@
 #include <iostream>
 #include <map>
 
-class map
+class tilemap
 {
 public:
-    map();
+    tilemap();
     void action(Tile t);
 private:
     Tile **tiles;

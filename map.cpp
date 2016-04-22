@@ -3,7 +3,7 @@
 
 
 
-map::map()
+tilemap::tilemap()
 {
     tiles = new Tile*[10*10];
     std::ifstream fichier("plateau.txt",std::ios::in);
