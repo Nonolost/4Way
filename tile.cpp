@@ -17,5 +17,8 @@ bool Tile::canUse(){
 bool Tile::canMove(){
     return move;
 }
+std::string Tile::getCouleur(){
+    return couleur;
+}
 
 

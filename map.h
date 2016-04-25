@@ -13,7 +13,8 @@ class tilemap
 {
 public:
     tilemap();
-    void action(Tile t);
+    void action(Tile* t);
+    Tile** getMap();
 private:
     Tile **tiles;
 };

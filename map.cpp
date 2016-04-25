@@ -101,8 +101,21 @@ tilemap::tilemap()
 
 
 
-void action(Tile t){
-
+void tilemap::action(Tile* t){
+    std::string couleur = t->getCouleur();
+    std::vector<int> tar = reinterpret_cast<Usable*>(t)->getTarget();
+    std::vector<int>::iterator it = tar.begin();
+    while(it != tar.end()){
+        if (tiles[*it]->canMove()){
+            tiles[*it] = new Wall(couleur);
+        }else{
+            tiles[*it] = new Empty(couleur);
+        }
+        it++;
+    }
+}
+Tile** tilemap::getMap(){
+    return tiles;
 }
 
 

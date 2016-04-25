@@ -9,6 +9,7 @@ public:
     Tile(bool m, bool u, std::string t,std::string couleur);
     bool canUse();
     bool canMove();
+    std::string getCouleur();
 private:
     std::string type;
     std::string couleur;
