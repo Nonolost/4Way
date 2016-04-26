@@ -118,4 +118,7 @@ Tile** tilemap::getMap(){
     return tiles;
 }
 
-
+Tile* tilemap::at(CartesianPosition cp)
+{
+    return tiles[(10-cp.getY())*10+cp.getX()];
+}

@@ -10,7 +10,8 @@ SOURCES += \
     objectif.cpp \
     mainwindow.cpp \
     game.cpp \
-    position.cpp
+    position.cpp \
+    player.cpp
 
 HEADERS += \
     map.h \
@@ -21,7 +22,8 @@ HEADERS += \
     objectif.h \
     mainwindow.h \
     game.h \
-    position.h
+    position.h \
+    player.h
 
 DISTFILES += \
     plateau.txt

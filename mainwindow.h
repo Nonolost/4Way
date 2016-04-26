@@ -25,6 +25,7 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
+    Game *currGame;
 };
 
 #endif // MAINWINDOW_H

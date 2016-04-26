@@ -5,6 +5,7 @@
 #include "empty.h"
 #include "usable.h"
 #include "objectif.h"
+#include "position.h"
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -15,6 +16,7 @@ public:
     tilemap();
     void action(Tile* t);
     Tile** getMap();
+    Tile* at(CartesianPosition);
 private:
     Tile **tiles;
 };

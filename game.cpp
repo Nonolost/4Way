@@ -6,22 +6,35 @@
  */
 Game::Game()
 {
-
+    // FIXME : Initialize what's needed
+    myPlayer = 0;
+    //players = new Player[NB_PLAYERS];
+    plateaux[0] = new tilemap();
+    positions.push(CartesianPosition(1,0));
 }
 
 /**
  * @brief move
  * Déplace le joueur
- * @param pos Décalage
+ * @param pos Code indiquant le type de décalage à appliquer
  */
-void Game::move(Position pos)
+void Game::move(int pos)
 {
     // TODO : Effectuer le déplacement
-    if (pos.getX()==0 && pos.getY()==1) cout << "Saut" << endl;
-    if (pos.getY()==0){
-        if (pos.getX()==-1) cout << "Vers la gauche" << endl;
-        if (pos.getX()==1) cout << "Vers la droite" << endl;
+    switch (pos){
+    case CartesianPosition::SAUT:
+        cout << "Saut" << endl;
+        break;
+    case CartesianPosition::GCHE:
+        cout << "Vers la gauche" << endl;
+        break;
+    case CartesianPosition::DRTE:
+        cout << "Vers la droite" << endl;
+        break;
+    default:
+        break;
     }
+    pushMove(pos);
 }
 
 /**
@@ -34,3 +47,33 @@ void Game::use()
     cout << "Action" << endl;
 }
 
+void Game::pushMove(int move)
+{
+    // TODO : Ajouter le mouvement sur la pile
+    cout << positions.size() << "éléments dans la file" << endl;
+    static int lastXChange;
+    static auto lastChange = system_clock::now();
+    cout << "Avant switch" << endl;
+    switch (move){
+    case CartesianPosition::SAUT:
+        nextPosition = positions.back()+CartesianPosition(1,(duration_cast<milliseconds>(system_clock::now()-lastChange).count()<DELAI_SIMULTANE) ? lastXChange : 0);
+        lastXChange=0;
+        break;
+    case CartesianPosition::GCHE:
+        nextPosition = positions.back()+CartesianPosition(0,-1);
+        lastXChange = -1;
+        break;
+    case CartesianPosition::DRTE:
+        nextPosition = positions.back()+CartesianPosition(0,1);
+        lastXChange = 1;
+        break;
+    default:
+        break;
+    }
+    cout << "Après switch" << endl;
+    cout << "(" << nextPosition.getX() << ";" << nextPosition.getY() << ")" << endl;
+    if (plateaux[myPlayer]->at(nextPosition)->canMove())
+        positions.push(nextPosition);
+    cout << "Après push" << endl;
+    lastChange=system_clock::now();
+}

@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     MainWindow w;
     QPushButton button("Tout");
-    w.setCentralWidget(&button);
+    //w.setCentralWidget(&button);
 
     w.show();
 
