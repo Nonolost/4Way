@@ -9,7 +9,7 @@ Game::Game()
     // FIXME : Initialize what's needed
     myPlayer = 0;
     //players = new Player[NB_PLAYERS];
-    plateaux[0] = new tilemap();
+    plateaux = new tilemap();
     positions.push(CartesianPosition(1,0));
 }
 
@@ -72,7 +72,7 @@ void Game::pushMove(int move)
     }
     cout << "Après switch" << endl;
     cout << "(" << nextPosition.getX() << ";" << nextPosition.getY() << ")" << endl;
-    if (plateaux[myPlayer]->at(nextPosition)->canMove())
+    if (plateaux->at(myPlayer,nextPosition)->canMove())
         positions.push(nextPosition);
     cout << "Après push" << endl;
     lastChange=system_clock::now();

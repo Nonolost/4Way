@@ -21,7 +21,7 @@ private:
     Player* players[NB_PLAYERS];
     queue<CartesianPosition> positions;
     CartesianPosition nextPosition;
-    tilemap* plateaux[NB_PLAYERS];
+    tilemap* plateaux;
 public:
     Game();
     /**
