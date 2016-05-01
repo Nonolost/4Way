@@ -17,6 +17,7 @@ public:
     tilemap();
     void action(Tile* t);
     std::map<int,Tile **> getMap();
+    Tile ** getMap(int joueur);
     Tile* at(int joueur, CartesianPosition);
 private:
     std::map<int,Tile **> tiles;

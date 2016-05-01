@@ -127,6 +127,9 @@ void tilemap::action(Tile* t){
 std::map<int, Tile **> tilemap::getMap(){
     return tiles;
 }
+Tile ** tilemap::getMap(int joueur){
+    return tiles[joueur];
+}
 
 Tile* tilemap::at(int joueur,CartesianPosition cp)
 {
