@@ -8,6 +8,7 @@
 #include "position.h"
 #include <fstream>
 #include <iostream>
+#include <utility>
 #include <map>
 
 class tilemap
@@ -15,10 +16,10 @@ class tilemap
 public:
     tilemap();
     void action(Tile* t);
-    Tile** getMap();
-    Tile* at(CartesianPosition);
+    std::map<int,Tile **> getMap();
+    Tile* at(int joueur, CartesianPosition);
 private:
-    Tile **tiles;
+    std::map<int,Tile **> tiles;
 };
 
 #endif // MAP_H

@@ -26,7 +26,10 @@ HEADERS += \
     player.h
 
 DISTFILES += \
-    plateau.txt
+    plateau0.txt \
+    plateau1.txt \
+    plateau2.txt \
+    plateau3.txt
 
 FORMS += \
     mainwindow.ui
