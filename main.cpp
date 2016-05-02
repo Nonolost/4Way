@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
 
     w.show();
 
-    tilemap m = tilemap();
+    tilemap* m = new tilemap();
 
     MenuWindow menu_window;
     menu_window.show();

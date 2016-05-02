@@ -6,15 +6,17 @@
 tilemap::tilemap()
 {
     //tiles = new Tile*[10*10];
+
     std::string file;
     std::string p = "plateau";
     std::string f = ".txt";
     std::vector<std::pair<int,int>> vert,rouge,bleu,jaune;
-    std::map<int,std::vector<std::pair<int,int>>> dico;
+    std::map<std::pair<int,int>,std::vector<std::pair<int,int>>> dico;
     for(int j = 0; j <4; j++){
         tiles[j] = new Tile*[10*10];
         file = p+ std::to_string(j) + f;
         std::ifstream fichier(file,std::ios::in);
+
         if(fichier){
 
             int n;
@@ -37,7 +39,7 @@ tilemap::tilemap()
                 break;
                 case 4 :
                     tiles[j][i] = new Usable("vert");
-                    dico[i] = vert;
+                    dico[std::make_pair(j,i)] = vert;
                 break;
                 case 5 :
                     tiles[j][i] = new Objectif("vert");
@@ -52,7 +54,7 @@ tilemap::tilemap()
                 break;
                 case 8 :
                     tiles[j][i] = new Usable("rouge");
-                    dico[i] = rouge;
+                    dico[std::make_pair(j,i)] = rouge;
                 break;
                 case 9 :
                     tiles[j][i] = new Objectif("rouge");
@@ -67,7 +69,7 @@ tilemap::tilemap()
                 break;
                 case 12 :
                     tiles[j][i] = new Usable("bleu");
-                    dico[i] = bleu;
+                    dico[std::make_pair(j,i)] = bleu;
                 break;
                 case 13 :
                     tiles[j][i] = new Objectif("bleu");
@@ -82,7 +84,7 @@ tilemap::tilemap()
                 break;
                 case 16 :
                     tiles[j][i] = new Usable("jaune");
-                    dico[i] = jaune;
+                    dico[std::make_pair(j,i)] = jaune;
                 break;
                 case 17 :
                     tiles[j][i] = new Objectif("jaune");
@@ -94,19 +96,22 @@ tilemap::tilemap()
                 }
 
             }
-            fichier.close();
+
 
         }else { std::cerr << "fichier introuvable !" << std::endl; }
 
-
+    fichier.close();
 
 
     }
-    std::map<int,std::vector<std::pair<int,int>>>::iterator it = dico.begin();
+
+    std::map<std::pair<int,int>,std::vector<std::pair<int,int>>>::iterator it = dico.begin();
     while(it != dico.end()){
-        reinterpret_cast<Usable*>(tiles[it->first])->setTarget(it->second);
+        reinterpret_cast<Usable*>(tiles[it->first.first][it->first.second])->setTarget(it->second);
         it++;
+
     }
+
 }
 
 
