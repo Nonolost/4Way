@@ -12,7 +12,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setFocusPolicy(Qt::StrongFocus);
+    setFixedSize(500,500);
+
     currGame = new Game();
+    
+    plateauWidget **p = new plateauWidget*[4];
+    QGridLayout *gridLayout = new QGridLayout;
+    for(int i = 0; i<4;i++){
+        p[i]= new plateauWidget(this,currGame->getPlateau()->getMap(i));
+        p[i]->setGeometry(i%2*205,i/2*205,200,200);
+        gridLayout->addWidget(p[i]);
+    }
+
+    setLayout(gridLayout);
+
 }
 
 /**

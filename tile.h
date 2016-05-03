@@ -10,6 +10,7 @@ public:
     bool canUse();
     bool canMove();
     std::string getCouleur();
+    std::string getType();
 private:
     std::string type;
     std::string couleur;

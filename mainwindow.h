@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <iostream>
 #include "game.h"
+#include "plateauWidget.h"
 
 using namespace std;
 

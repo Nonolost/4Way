@@ -77,3 +77,6 @@ void Game::pushMove(int move)
     cout << "Après push" << endl;
     lastChange=system_clock::now();
 }
+tilemap* Game::getPlateau(){
+    return plateaux;
+}

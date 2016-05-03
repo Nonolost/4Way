@@ -35,6 +35,7 @@ public:
      */
     void use();
     void pushMove(int);
+    tilemap* getPlateau();
 };
 
 #endif // GAME_H
