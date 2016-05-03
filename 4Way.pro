@@ -18,7 +18,10 @@ SOURCES += \
     serveurwidget.cpp \
     client.cpp \
     clientwidget.cpp \
-    connexion.cpp
+    connexion.cpp \
+    gamewindow.cpp \
+    mapwidget.cpp \
+    concurrentqueue.cpp
 
 HEADERS += \
     map.h \
@@ -36,7 +39,10 @@ HEADERS += \
     serveurwidget.h \
     client.h \
     clientwidget.h \
-    connexion.h
+    connexion.h \
+    gamewindow.h \
+    mapwidget.h \
+    concurrentqueue.h
 
 DISTFILES += \
     plateau0.txt \

@@ -3,6 +3,7 @@
 
 #include <QTcpServer>
 #include "connexion.h"
+#include "gamewindow.h"
 
 QT_BEGIN_NAMESPACE
 class QNetworkSession;
@@ -20,15 +21,22 @@ public:
 
     void start(QString address, quint16 port, QString pseudo);
     void close();
+    void lancerPartie(int numero);
+    void analyserInstruction(QString instruction);
+    void verifierConnexion(const char* buffer);
 
 public slots:
-    void verifierConnexion();
     void erreurConnexion();
+    void recevoirInstruction();
 
 private:
     QTcpSocket *client;
     QString pseudo;
     ClientWidget *cw;
+
+    quint16 blockSize;
+
+    GameWindow *gw;
 };
 
 #endif // SERVER_H

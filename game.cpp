@@ -10,6 +10,8 @@ Game::Game()
     myPlayer = 0;
     //players = new Player[NB_PLAYERS];
     plateaux = new tilemap();
+    positions = std::queue<CartesianPosition>();
+
     positions.push(CartesianPosition(1,0));
 }
 
@@ -77,3 +79,4 @@ void Game::pushMove(int move)
     cout << "Après push" << endl;
     lastChange=system_clock::now();
 }
+

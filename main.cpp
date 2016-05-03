@@ -7,32 +7,48 @@
 #include "client.h"
 #include "map.h"
 #include "mainwindow.h"
+#include "gamewindow.h"
+#include <direct.h>
+#include <stdio.h>
+#include <concurrent_queue.h>
+#include <windows.h>
+
+#define GetCurrentDir _getcwd
+
+
+concurrency::concurrent_queue<int> test;
+
+class MonThreadCustom : public QThread
+{
+   private:
+      void run()
+      {
+          std::cout << "test" << std::endl;
+          for (int i = 0; i < 1000000; i++) {
+              test.push(i);
+          }
+          std::cout << "test2" << std::endl;
+      }
+};
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    MainWindow w;
+    //MainWindow w;
     QPushButton button("Tout");
     //w.setCentralWidget(&button);
 
-    w.show();
+    //w.show();
 
-    tilemap m = tilemap();
+    //tilemap m = tilemap();
+
 
     MenuWindow menu_window;
     menu_window.show();
 
-    return app.exec();
-/*
-    QApplication app(argc, argv);
-    QGuiApplication::setApplicationDisplayName(QTclient::tr("Fortune Client"));
-    QTclient client;
-    client.show();
+   // GameWindow gw;
+   // gw.show();
+
+
     return app.exec();
 
-    QApplication app(argc, argv);
-    QGuiApplication::setApplicationDisplayName(QTserver::tr("Fortune Server"));
-    QTserver server;
-    server.show();
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-    return app.exec();*/
 }

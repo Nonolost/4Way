@@ -4,6 +4,8 @@
 #include <QBoxLayout>
 #include <string>
 
+#include "menuwindow.h"
+#include "gamewindow.h"
 ServeurWidget::ServeurWidget(QWidget *parent, Server *serveur)
     : QWidget(parent)
 {
@@ -25,6 +27,7 @@ ServeurWidget::ServeurWidget(QWidget *parent, Server *serveur)
 
     demarrer_bouton = new QPushButton("Lancer partie");
     demarrer_bouton->setEnabled(false);
+    connect(demarrer_bouton, SIGNAL(clicked(bool)), this, SLOT(lancerPartie()));
 
     vlay->addWidget(ip_serveur);
     vlay->addWidget(port_serveur);
@@ -57,3 +60,14 @@ void ServeurWidget::updateClients()
 
     demarrer_bouton->setEnabled(serveur->getPseudosClients()->size() == 3);
 }
+
+void ServeurWidget::lancerPartie()
+{
+    //GameWindow *gw = new GameWindow(0, serveur, 0);
+
+    serveur->envoyerInstructionDemarrerPartie();
+
+    //gw->show();
+    //this->close();
+}
+

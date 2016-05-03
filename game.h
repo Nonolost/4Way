@@ -7,6 +7,7 @@
 #include "position.h"
 #include "player.h"
 #include "map.h"
+#include "concurrentqueue.h"
 
 #define NB_PLAYERS 4
 #define DELAI_SIMULTANE 200
@@ -19,7 +20,7 @@ class Game
 private:
     int myPlayer;
     Player* players[NB_PLAYERS];
-    queue<CartesianPosition> positions;
+    std::queue<CartesianPosition> positions;
     CartesianPosition nextPosition;
     tilemap* plateaux;
 public:
@@ -35,6 +36,7 @@ public:
      */
     void use();
     void pushMove(int);
+    tilemap *getPlateaux() const { return plateaux; }
 };
 
 #endif // GAME_H

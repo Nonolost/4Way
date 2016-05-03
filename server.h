@@ -26,6 +26,8 @@ public:
     void setServeurWidget(ServeurWidget *sw);
     QList<QString>* getPseudosClients();
 
+    void envoyerInstructionDemarrerPartie();
+
 public slots:
     void acceptConnection();
     void startRead(int index);

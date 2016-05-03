@@ -1,20 +1,24 @@
 #include "map.h"
 
-
+#include <iostream>
 
 
 tilemap::tilemap()
 {
+    std::cout << "coucou" << std::endl;
     //tiles = new Tile*[10*10];
     std::string file;
     std::string p = "plateau";
     std::string f = ".txt";
     std::vector<std::pair<int,int>> vert,rouge,bleu,jaune;
     std::map<int,std::vector<std::pair<int,int>>> dico;
+
     for(int j = 0; j <4; j++){
         tiles[j] = new Tile*[10*10];
         file = p+ std::to_string(j) + f;
         std::ifstream fichier(file,std::ios::in);
+
+
         if(fichier){
 
             int n;
@@ -96,12 +100,13 @@ tilemap::tilemap()
             }
             fichier.close();
 
-        }else { std::cerr << "fichier introuvable !" << std::endl; }
-
-
-
-
+        }
+        else {
+            std::cerr << "fichier introuvable !" << std::endl;
+        }
     }
+
+
     std::map<int,std::vector<std::pair<int,int>>>::iterator it = dico.begin();
     while(it != dico.end()){
         reinterpret_cast<Usable*>(tiles[it->first])->setTarget(it->second);
