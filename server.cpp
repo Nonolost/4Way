@@ -13,6 +13,14 @@ Server::Server(QObject* parent)
     clients = new QList<QTcpSocket*>;
     clients_pseudos = new QList<QString>;
 
+    // init pour les déplacements
+    deplacements = new QList<concurrency::concurrent_queue<string>*>();
+    deplacements->append(new concurrency::concurrent_queue<string>());
+    deplacements->append(new concurrency::concurrent_queue<string>());
+    deplacements->append(new concurrency::concurrent_queue<string>());
+    deplacements->append(new concurrency::concurrent_queue<string>());
+
+
     mapper = new QSignalMapper(this);
 
     connect(server, &QTcpServer::newConnection,
@@ -40,12 +48,12 @@ void Server::acceptConnection()
 
         connect(clients->last(), SIGNAL(disconnected()),
                 this, SLOT(closeConnection()));
-        sock->write("1;ok",5);
+        sock->write("0;ok",5);
 
         //sock->write((const char*) clients->length()-1,sizeof(clients->length()-1));
     }
     else {
-        sock->write("1;nop",6);
+        sock->write("0;nop",6);
         sock->close();
     }
 }
@@ -64,9 +72,30 @@ void Server::startRead(int index)
     char buffer[1020] = {0};
 
     clients->at(index)->read(buffer, clients->at(index)->bytesAvailable());
-    std::cout << buffer << std::endl;
-    clients_pseudos->append(buffer);
-    sw->setJoueur(buffer, index);
+
+    QString instruction = QString::fromUtf8(buffer);
+
+    QStringList list = instruction.split(";");
+
+
+    std::cout << "serveur viens la avec : " << instruction.toStdString() << std::endl;
+    switch(list.at(0).toInt())
+    {
+    case 0:
+        clients_pseudos->append(buffer);
+        sw->setJoueur(list.at(1), index);
+        break;
+        // instruction déplacement : G/H/B
+    case 1:
+        this->ajouterDeplacement(index,list.at(1).toStdString());
+        break;
+        // instruction action gemme
+    case 2:
+        break;
+        // instruction action levier : couleur
+    case 3:
+        break;
+    }
 }
 
 QString Server::getAdresseIP()
@@ -106,26 +135,39 @@ QList<QString>* Server::getPseudosClients() {
 void Server::envoyerInstructionDemarrerPartie()
 {
     for (int i = 0; i < clients->size(); i++) {
-        /*
-        QByteArray block;
-        QDataStream out(&block, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_5_6);
-    //! [4] //! [6]
-        out << (quint16)0;
-        out << "coucou";
-
-        out.device()->seek(0);
-        out << (quint16)(block.size() - sizeof(quint16));
-
-        clients->at(i)->write(block);
-        */
-
-        std::cout << "ohohoho" << std::endl;
         char buffer[1020] = {0};
-        strcpy(buffer,std::to_string(0).c_str());
+        strcpy(buffer,std::to_string(1).c_str());
         strcat(buffer,";");
         strcat(buffer,std::to_string(i).c_str());
-        std::cout << "ohohoho" << std::endl;
         clients->at(i)->write(buffer,sizeof(buffer));
     }
+}
+
+void Server::sendNouvellePosition(int numero, const char* buffer)
+{
+    std::cout << "serveur envoie pos " << buffer << " a " << numero << std::endl;
+    clients->at(numero)->write("test",5);
+    clients->at(numero)->write(buffer,sizeof(buffer));
+}
+
+void Server::ajouterDeplacement(int numero, string direction)
+{
+    std::cout << "j'ajoute pour " << numero << " le déplacement : " << direction << std::endl;
+    this->deplacements->at(numero)->push(direction);
+    std::cout << "nb déplacement now : " << this->deplacements->at(numero)->unsafe_size() << std::endl;
+}
+
+void Server::initThreads()
+{
+    for (int i = 0; i < 4; i++) {
+        CalculPosition *cp = new CalculPosition(this->game, this, this->deplacements->at(i), i);
+        cp->start();
+    }
+
+    std::cout << "j'ai tout init les threads" << std::endl;
+}
+
+void Server::initGame(Game* game)
+{
+    this->game = game;
 }

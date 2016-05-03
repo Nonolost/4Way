@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QPushButton>
+#include "gamewindow.h"
 
 class Server;
 
@@ -16,6 +17,8 @@ public:
     void setJoueur(QString pseudo, quint16 numero);
     void updateClients();
 
+    inline GameWindow* getGW() { return gw; }
+
 private slots:
     void lancerPartie();
 
@@ -24,6 +27,8 @@ private:
     QList<QLabel*> joueurs;
     QPushButton *demarrer_bouton;
     Server *serveur;
+
+    GameWindow *gw;
 };
 
 #endif // SERVEURWIDGET_H

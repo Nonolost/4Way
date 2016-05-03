@@ -31,7 +31,14 @@ void Client::verifierConnexion(const char* buffer) {
     if (strcmp(buffer,"nop") == 0)
         cw->setEtat("Connexion refusée, trop de joueurs");
     else {
-        client->write(this->pseudo.toStdString().c_str(),sizeof(this->pseudo.toStdString().c_str()));
+
+        char buffer[1020] = {0};
+        strcpy(buffer,std::to_string(0).c_str());
+        strcat(buffer,";");
+        strcat(buffer,this->pseudo.toStdString().c_str());
+
+        client->write(buffer,sizeof(buffer));
+
         cw->setEtat("Connexion réussie, en attente du lancement");
     }
 }
@@ -57,33 +64,9 @@ void Client::recevoirInstruction()
 
 void Client::recevoirInstruction()
 {
-/*
-    std::cout << "ici alors que non..." << std::endl;
-    QDataStream in(client);
-    in.setVersion(QDataStream::Qt_5_6);
-
-    if (blockSize == 0) {
-        if (client->bytesAvailable() < (int)sizeof(quint16))
-            return;
-
-        in >> blockSize;
-    }
-
-
-    std::cout << "et là" << std::endl;
-    if (client->bytesAvailable() < blockSize)
-        return;
-
-
-    std::cout << "et encore..." << std::endl;
-    QString instruction;
-    in >> instruction;
-*/
-
     char buffer[1020] = {0};
 
     client->read(buffer, client->bytesAvailable());
-    std::cout << buffer << std::endl;
 
     analyserInstruction(QString::fromUtf8(buffer));
 }
@@ -104,6 +87,7 @@ void Client::analyserInstruction(QString instruction)
         break;
         // instruction lancement partie / récupération numéro joueur
     case 1:
+        std::cout << "je lance en " << list.at(1).toInt() << std::endl;
         lancerPartie(list.at(1).toInt());
         break;
         // instruction action levier / couleur levier
@@ -111,14 +95,26 @@ void Client::analyserInstruction(QString instruction)
         break;
         // instruction déplacement joueur / id joueur / nouveau x / nouveau y
     case 3:
-
+        std::cout << "j'ai recu position " << std::endl;
+        gw->getGame()->getPositionJoueur(gw->getGame()->getPlayerNumero()).push(CartesianPosition(list.at(1).toInt(),list.at(2).toInt()));
         break;
     }
 }
 
 void Client::lancerPartie(int numero)
 {
-    //gw = new GameWindow(0, this, numero);
+    gw = new GameWindow(0, this, numero);
 
-    //gw->show();
+    gw->show();
+}
+
+
+void Client::envoyerDeplacement(int numero, string direction)
+{
+    char buffer[1020] = {0};
+    strcpy(buffer,std::to_string(1).c_str());
+    strcat(buffer,";");
+    strcat(buffer,direction.c_str());
+
+    client->write(buffer,sizeof(buffer));
 }

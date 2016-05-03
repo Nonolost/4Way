@@ -5,7 +5,7 @@
 #include <string>
 
 #include "menuwindow.h"
-#include "gamewindow.h"
+
 ServeurWidget::ServeurWidget(QWidget *parent, Server *serveur)
     : QWidget(parent)
 {
@@ -63,11 +63,12 @@ void ServeurWidget::updateClients()
 
 void ServeurWidget::lancerPartie()
 {
-    //GameWindow *gw = new GameWindow(0, serveur, 0);
-
+    gw = new GameWindow(0, serveur, 4);
     serveur->envoyerInstructionDemarrerPartie();
 
-    //gw->show();
+    gw->show();
+    serveur->initGame(gw->getGame());
+    serveur->initThreads();
     //this->close();
 }
 

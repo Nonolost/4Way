@@ -12,6 +12,8 @@
 #define NB_PLAYERS 4
 #define DELAI_SIMULTANE 200
 
+#include <QList>
+
 using namespace std;
 using namespace std::chrono;
 
@@ -20,11 +22,11 @@ class Game
 private:
     int myPlayer;
     Player* players[NB_PLAYERS];
-    std::queue<CartesianPosition> positions;
+    QList<std::queue<CartesianPosition>> positions;
     CartesianPosition nextPosition;
     tilemap* plateaux;
 public:
-    Game();
+    Game(int numero);
     /**
      * @brief move
      * Déplace le joueur selon le code reçu
@@ -36,7 +38,14 @@ public:
      */
     void use();
     void pushMove(int);
-    tilemap *getPlateaux() const { return plateaux; }
+
+    inline tilemap* getPlateau() { return plateaux; }
+    inline std::queue<CartesianPosition> getPositionJoueur(int numero) { return positions.at(numero); }
+    inline Player* getPlayer(int numero) { return players[numero]; }
+    inline int getPlayerNumero() { return myPlayer; }
+
+    void ajouterDeplacement(int numero, string direction);
+
 };
 
 #endif // GAME_H

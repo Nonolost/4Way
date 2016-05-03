@@ -20,5 +20,8 @@ bool Tile::canMove(){
 std::string Tile::getCouleur(){
     return couleur;
 }
+std::string Tile::getType(){
+    return type;
+}
 
 

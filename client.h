@@ -24,6 +24,7 @@ public:
     void lancerPartie(int numero);
     void analyserInstruction(QString instruction);
     void verifierConnexion(const char* buffer);
+    void envoyerDeplacement(int numero, string direction);
 
 public slots:
     void erreurConnexion();

@@ -21,7 +21,8 @@ SOURCES += \
     connexion.cpp \
     gamewindow.cpp \
     mapwidget.cpp \
-    concurrentqueue.cpp
+    concurrentqueue.cpp \
+    plateauWidget.cpp
 
 HEADERS += \
     map.h \
@@ -42,7 +43,8 @@ HEADERS += \
     connexion.h \
     gamewindow.h \
     mapwidget.h \
-    concurrentqueue.h
+    concurrentqueue.h \
+    plateauWidget.h
 
 DISTFILES += \
     plateau0.txt \

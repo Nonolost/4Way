@@ -41,6 +41,10 @@ int main(int argc, char *argv[]) {
 
     //tilemap m = tilemap();
 
+    tilemap* m = new tilemap();
+
+    //GameWindow *gw = new GameWindow();
+    //gw->show();
 
     MenuWindow menu_window;
     menu_window.show();
