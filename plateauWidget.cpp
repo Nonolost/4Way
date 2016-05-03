@@ -2,8 +2,8 @@
 
 #include "plateauWidget.h"
 
-plateauWidget::plateauWidget(QWidget *parent, Tile **map)
-    : QWidget(parent)
+plateauWidget::plateauWidget(QWidget *parent, Tile **map,int i)
+    : QWidget(parent),player(i)
 {
     tmap = map;
     dico["noir"] = 0;
@@ -11,6 +11,7 @@ plateauWidget::plateauWidget(QWidget *parent, Tile **map)
     dico["rouge"] = 2;
     dico["jaune"] = 3;
     dico["bleu"] = 4;
+    pos = CartesianPosition(0,0);
     setPalette(QPalette(QColor(250, 250, 250)));
     setAutoFillBackground(true);
 }
@@ -110,6 +111,28 @@ void plateauWidget::paintEvent(QPaintEvent * /* event */)
         painter.drawRect(QRect(i%10*taille,i/10*taille,taille-1,taille-1));
     }
 
+    paintPlayer();
     //painter.drawRect(QRect(30, -5, 20, 10));
 
+}
+void plateauWidget::movePlayer(){
+    QRegion region = playerRect();
+
+    QRect playerR = playerRect();
+
+    // ??
+    //region = region.unite(playerR);
+    update(region);
+}
+void plateauWidget::paintPlayer(){
+    QPainter painter(this);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(Qt::red);
+    painter.drawRect(playerRect());
+}
+QRect plateauWidget::playerRect() {
+    int taille = 20;
+
+    QRect res(pos.getX(),pos.getY(),taille/2-1,taille-1);
+    return res;
 }
