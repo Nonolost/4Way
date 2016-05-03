@@ -140,3 +140,20 @@ Tile* tilemap::at(int joueur,CartesianPosition cp)
 {
     return tiles[joueur][(10-cp.getY())*10+cp.getX()];
 }
+bool tilemap::isValide(int joueur,CartesianPosition cp)
+{
+    bool res;
+    int x = cp.getX()/20;
+    int y = cp.getY()/20;
+    res = tiles[joueur][10*y+x]->canMove();
+    if(cp.getX()%20 > 10){
+        res = res && tiles[joueur][10*y+x+1]->canMove();
+    }
+    if(cp.getY()%20 != 0){
+        res = res && tiles[joueur][10*(y+1)+x]->canMove();
+    }
+    if(cp.getY()%20 != 0 && cp.getX()%20 > 10){
+        res = res && tiles[joueur][10*(y+1)+x+1]->canMove();
+    }
+    return res;
+}
