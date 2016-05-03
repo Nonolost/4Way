@@ -19,6 +19,8 @@ public:
     std::map<int,Tile **> getMap();
     Tile ** getMap(int joueur);
     Tile* at(int joueur, CartesianPosition);
+    bool isValide(int joueur, CartesianPosition cp);
+    bool isOnFloor(int joueur, CartesianPosition cp);
 private:
     std::map<int,Tile **> tiles;
 };
