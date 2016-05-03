@@ -157,3 +157,15 @@ bool tilemap::isValide(int joueur,CartesianPosition cp)
     }
     return res;
 }
+bool tilemap::isOnFloor(int joueur,CartesianPosition cp)
+{
+    bool res;
+    int x = cp.getX()/20;
+    int y = cp.getY()/20;
+    res = !tiles[joueur][10*(y+1)+x]->canMove();
+    if(cp.getX()%20 > 10)
+        res = res || !tiles[joueur][10*(y+1)+x+1]->canMove();
+
+    res = res && cp.getY()%20 == 0;
+    return res;
+}
