@@ -11,15 +11,13 @@ class plateauWidget : public QWidget
 public:
     plateauWidget(QWidget *parent = 0, Tile** map = nullptr);
 
-    //int angle() const { return currentAngle; }
 
 public slots:
-    //void setAngle(int angle);
 
 signals:
-    //void angleChanged(int newAngle);
 
 protected:
+    void changeCase(std::vector<int> list);
     void paintEvent(QPaintEvent *event);
 
 private:

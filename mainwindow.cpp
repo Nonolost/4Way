@@ -25,7 +25,6 @@ MainWindow::MainWindow(QWidget *parent) :
     }
 
     setLayout(gridLayout);
-
 }
 
 /**

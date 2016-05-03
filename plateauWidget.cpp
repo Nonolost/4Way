@@ -14,20 +14,50 @@ plateauWidget::plateauWidget(QWidget *parent, Tile **map)
     setPalette(QPalette(QColor(250, 250, 250)));
     setAutoFillBackground(true);
 }
-/*
-void plateauWidget::setAngle(int angle)
+
+void plateauWidget::changeCase(std::vector<int> list)
 {
-    if (angle < 5)
-        angle = 5;
-    if (angle > 70)
-        angle = 70;
-    if (currentAngle == angle)
-        return;
-    currentAngle = angle;
-    update();
-    emit angleChanged(currentAngle);
+    int taille = 20;
+    QPainter painter(this);
+
+    for(int i : list){
+        switch(dico[tmap[i]->getCouleur()]){
+        case 1 :
+            painter.setPen(Qt::green);
+            painter.setBrush(Qt::darkGreen);
+
+            break;
+        case 2 :
+            painter.setPen(Qt::red);
+            painter.setBrush(Qt::darkRed);
+
+            break;
+        case 3 :
+            painter.setPen(Qt::yellow);
+            painter.setBrush(Qt::darkYellow);
+
+            break;
+        case 4 :
+            painter.setPen(Qt::blue);
+            painter.setBrush(Qt::darkBlue);
+
+            break;
+        default :
+            painter.setPen(Qt::darkGray);
+            painter.setBrush(Qt::black);
+            break;
+        }
+        if(tmap[i]->canMove()){
+            painter.setBrush(Qt::NoBrush);
+        }
+
+
+        painter.drawRect(QRect(i%10*taille,i/10*taille,taille-1,taille-1));
+    }
+    // update(); ??
+
 }
-*/
+
 void plateauWidget::paintEvent(QPaintEvent * /* event */)
 {
     int taille = 20;
