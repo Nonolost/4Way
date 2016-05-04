@@ -5,7 +5,11 @@
 #include <string>
 
 #include "menuwindow.h"
-
+/**
+ * @brief ServeurWidget::ServeurWidget
+ * @param parent
+ * @param serveur pointeur sur l'objet Server du programme
+ */
 ServeurWidget::ServeurWidget(QWidget *parent, Server *serveur)
     : QWidget(parent)
 {
@@ -38,7 +42,12 @@ ServeurWidget::ServeurWidget(QWidget *parent, Server *serveur)
 
     setLayout(vlay);
 }
-
+/**
+ * @brief ServeurWidget::setJoueur
+ * @param pseudo nom du joueur
+ * @param numero numero du joueur
+ * affiche que le joueur est connecté et active le bouton "Lancer partie" si 3 joueurs sont connectés
+ */
 void ServeurWidget::setJoueur(QString pseudo, quint16 numero)
 {
     joueurs.at(numero)->setText(pseudo + " connecté");
@@ -46,7 +55,9 @@ void ServeurWidget::setJoueur(QString pseudo, quint16 numero)
     demarrer_bouton->setEnabled(serveur->getPseudosClients()->size() == 3);
 }
 
-
+/**
+ * @brief ServeurWidget::updateClients
+ */
 void ServeurWidget::updateClients()
 {
     int i;
@@ -60,7 +71,10 @@ void ServeurWidget::updateClients()
 
     demarrer_bouton->setEnabled(serveur->getPseudosClients()->size() == 3);
 }
-
+/**
+ * @brief ServeurWidget::lancerPartie
+ * initialise la partie en ouvre la fenetre GameWindow
+ */
 void ServeurWidget::lancerPartie()
 {
     gw = new GameWindow(0, serveur, 4);
@@ -69,6 +83,5 @@ void ServeurWidget::lancerPartie()
     gw->show();
     serveur->initGame(gw->getGame());
     serveur->initThreads();
-    //this->close();
 }
 

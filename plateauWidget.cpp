@@ -2,6 +2,12 @@
 
 #include "plateauWidget.h"
 
+/**
+ * @brief plateauWidget::plateauWidget
+ * @param parent
+ * @param map plateau pour le joueur i
+ * @param i
+ */
 plateauWidget::plateauWidget(QWidget *parent, Tile **map,int i)
     : QWidget(parent),player(i)
 {
@@ -15,7 +21,11 @@ plateauWidget::plateauWidget(QWidget *parent, Tile **map,int i)
     setPalette(QPalette(QColor(250, 250, 250)));
     setAutoFillBackground(true);
 }
-
+/**
+ * @brief plateauWidget::changeCase
+ * @param list liste des coord' des cases a changer
+ * actualise les cases de la liste
+ */
 void plateauWidget::changeCase(std::vector<int> list)
 {
     int taille = 20;
@@ -55,10 +65,14 @@ void plateauWidget::changeCase(std::vector<int> list)
 
         painter.drawRect(QRect(i%10*taille,i/10*taille,taille-1,taille-1));
     }
-    // update(); ??
+
 
 }
 
+/**
+ * @brief plateauWidget::paintEvent
+ * peind l'ensemble du tableau + le joueur
+ */
 void plateauWidget::paintEvent(QPaintEvent * /* event */)
 {
     int taille = 20;
@@ -67,7 +81,7 @@ void plateauWidget::paintEvent(QPaintEvent * /* event */)
     painter.setPen(pen);
     painter.setBrush(Qt::NoBrush);
 
-    //painter.translate(0, rect().height());
+
 
     for(int i = 0; i < 100; i++){
         switch(dico[tmap[i]->getCouleur()]){
@@ -111,24 +125,37 @@ void plateauWidget::paintEvent(QPaintEvent * /* event */)
     }
 
     paintPlayer();
-    //painter.drawRect(QRect(30, -5, 20, 10));
+
 
 }
+
+/**
+ * @brief plateauWidget::movePlayer
+ * actualise la position du joueur
+ */
 void plateauWidget::movePlayer(){
     QRegion region = playerRect();
 
     QRect playerR = playerRect();
 
-    // ??
-    //region = region.unite(playerR);
+
     update(region);
 }
+
+/**
+ * @brief plateauWidget::paintPlayer
+ * peind le joueur
+ */
 void plateauWidget::paintPlayer(){
     QPainter painter(this);
     painter.setPen(Qt::NoPen);
     painter.setBrush(Qt::red);
     painter.drawRect(playerRect());
 }
+/**
+ * @brief plateauWidget::playerRect
+ * @return la zone du joueur
+ */
 QRect plateauWidget::playerRect() {
     int taille = 20;
 

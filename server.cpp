@@ -5,7 +5,10 @@
 #include "serveurwidget.h"
 #include "server.h"
 #include <iostream>
-
+/**
+ * @brief Server::Server
+ * @param parent
+ */
 Server::Server(QObject* parent)
     : Connexion(parent)
 {
@@ -31,11 +34,18 @@ Server::Server(QObject* parent)
     server->listen();
 }
 
+/**
+ * @brief Server::~Server
+ */
 Server::~Server()
 {
     server->close();
 }
 
+/**
+ * @brief Server::acceptConnection
+ * accepte une connection si il reste de la place
+ */
 void Server::acceptConnection()
 {
     QTcpSocket *sock = server->nextPendingConnection();
@@ -50,7 +60,7 @@ void Server::acceptConnection()
                 this, SLOT(closeConnection()));
         sock->write("0;ok",5);
 
-        //sock->write((const char*) clients->length()-1,sizeof(clients->length()-1));
+
     }
     else {
         sock->write("0;nop",6);
@@ -58,6 +68,10 @@ void Server::acceptConnection()
     }
 }
 
+/**
+ * @brief Server::closeConnection
+ * ferme la connection avec un client
+ */
 void Server::closeConnection()
 {
     QTcpSocket *sock = (QTcpSocket*) sender();
@@ -67,6 +81,11 @@ void Server::closeConnection()
     sw->updateClients();
 }
 
+/**
+ * @brief Server::startRead
+ * @param index
+ * traite les instructions
+ */
 void Server::startRead(int index)
 {
     char buffer[1020] = {0};
@@ -98,6 +117,10 @@ void Server::startRead(int index)
     }
 }
 
+/**
+ * @brief Server::getAdresseIP
+ * @return l'ip du serveur
+ */
 QString Server::getAdresseIP()
 {
     QString ipAddress;
@@ -126,12 +149,18 @@ void Server::setServeurWidget(ServeurWidget *sw)
 {
     this->sw = sw;
 }
-
+/**
+ * @brief Server::getPseudosClients
+ * @return liste des noms des clients
+ */
 QList<QString>* Server::getPseudosClients() {
     return clients_pseudos;
 }
 
-
+/**
+ * @brief Server::envoyerInstructionDemarrerPartie
+ * informe les clients que la partie commence
+ */
 void Server::envoyerInstructionDemarrerPartie()
 {
     for (int i = 0; i < clients->size(); i++) {
@@ -143,20 +172,32 @@ void Server::envoyerInstructionDemarrerPartie()
     }
 }
 
+/**
+ * @brief Server::sendNouvellePosition
+ * @param numero numero du client
+ * @param buffer
+ */
 void Server::sendNouvellePosition(int numero, const char* buffer)
 {
     std::cout << "serveur envoie pos " << buffer << " a " << numero << std::endl;
     clients->at(numero)->write("test",5);
     clients->at(numero)->write(buffer,sizeof(buffer));
 }
-
+/**
+ * @brief Server::ajouterDeplacement
+ * @param numero numero du joueur
+ * @param direction nouvelle direction du joueur
+ */
 void Server::ajouterDeplacement(int numero, string direction)
 {
     std::cout << "j'ajoute pour " << numero << " le déplacement : " << direction << std::endl;
     this->deplacements->at(numero)->push(direction);
     std::cout << "nb déplacement now : " << this->deplacements->at(numero)->unsafe_size() << std::endl;
 }
-
+/**
+ * @brief Server::initThreads
+ * initialise les Threads de calcul de position
+ */
 void Server::initThreads()
 {
     for (int i = 0; i < 4; i++) {
@@ -167,6 +208,10 @@ void Server::initThreads()
     std::cout << "j'ai tout init les threads" << std::endl;
 }
 
+/**
+ * @brief Server::initGame
+ * @param game
+ */
 void Server::initGame(Game* game)
 {
     this->game = game;

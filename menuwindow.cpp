@@ -7,7 +7,10 @@
 #include "server.h"
 #include "client.h"
 #include "clientwidget.h"
-
+/**
+ * @brief MenuWindow::MenuWindow
+ * @param parent
+ */
 MenuWindow::MenuWindow(QWidget *parent) : QWidget(parent)
 {
     setFixedSize(1000,500);
