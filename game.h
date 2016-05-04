@@ -7,7 +7,7 @@
 #include "position.h"
 #include "player.h"
 #include "map.h"
-#include "concurrentqueue.h"
+#include "concurrent_queue.h"
 
 #define NB_PLAYERS 4
 #define DELAI_SIMULTANE 200
@@ -17,14 +17,17 @@
 using namespace std;
 using namespace std::chrono;
 
+
+
 class Game
 {
 private:
     int myPlayer;
     Player* players[NB_PLAYERS];
-    QList<std::queue<CartesianPosition>> positions;
+    QList<concurrency::concurrent_queue<CartesianPosition>*> *positions;
     CartesianPosition nextPosition;
     tilemap* plateaux;
+
 public:
     Game(int numero);
     /**
@@ -40,7 +43,7 @@ public:
     void pushMove(int);
 
     inline tilemap* getPlateau() { return plateaux; }
-    inline std::queue<CartesianPosition> getPositionJoueur(int numero) { return positions.at(numero); }
+    inline concurrency::concurrent_queue<CartesianPosition> *getPositionJoueur(int numero) { return positions->at(numero); }
     inline Player* getPlayer(int numero) { return players[numero]; }
     inline int getPlayerNumero() { return myPlayer; }
 

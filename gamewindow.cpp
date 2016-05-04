@@ -3,26 +3,10 @@
 #include "game.h"
 #include "server.h"
 #include "client.h"
-#include "plateauWidget.h"
 #include <QGridLayout>
 
 GameWindow::GameWindow(QWidget *parent, Connexion *connexion, int numero) : QWidget(parent)
 {
-   /* this->numero = numero;
-    if (numero == 0) {
-        conn = (Server*) connexion;
-    }
-    else {
-        conn = (Client*) connexion;
-    }
-
-    game = new Game();
-    QGridLayout *gl= new QGridLayout(this);
-    gl->addWidget(new MapWidget(this,game->getPlateaux()->getMap(0)),0,0);
-    gl->addWidget(new MapWidget(this,game->getPlateaux()->getMap(2)),0,1);
-    gl->addWidget(new MapWidget(this,game->getPlateaux()->getMap(3)),1,0);
-    gl->addWidget(new MapWidget(this,game->getPlateaux()->getMap(4)),1,1);
-*/
     if (numero == 4)
         this->conn = (Server*) connexion;
     else
@@ -33,10 +17,21 @@ GameWindow::GameWindow(QWidget *parent, Connexion *connexion, int numero) : QWid
     game = new Game(numero);
 
     QGridLayout *gl= new QGridLayout(this);
-    gl->addWidget(new plateauWidget(0,game->getPlateau()->getMap(0)),0,0);
-    gl->addWidget(new plateauWidget(0,game->getPlateau()->getMap(1)),0,1);
-    gl->addWidget(new plateauWidget(0,game->getPlateau()->getMap(2)),1,0);
-    gl->addWidget(new plateauWidget(0,game->getPlateau()->getMap(3)),1,1);
+    pws = new QList<plateauWidget*>();
+    pws->append(new plateauWidget(0,game->getPlateau()->getMap(0),0,game->getPlayer(0)->getPos()));
+    pws->append(new plateauWidget(0,game->getPlateau()->getMap(1),1,game->getPlayer(1)->getPos()));
+    pws->append(new plateauWidget(0,game->getPlateau()->getMap(2),2,game->getPlayer(2)->getPos()));
+    pws->append(new plateauWidget(0,game->getPlateau()->getMap(3),3,game->getPlayer(3)->getPos()));
+
+    gl->addWidget(pws->at(0),0,0);
+    gl->addWidget(pws->at(1),0,1);
+    gl->addWidget(pws->at(2),1,0);
+    gl->addWidget(pws->at(3),1,1);
+/*
+    for (int i = 0; i < 4; i++) {
+        UpdatePosition *up = new UpdatePosition(this,i);
+        up->start();
+    }*/
 }
 
 Game* GameWindow::getGame()
@@ -59,7 +54,6 @@ void GameWindow::keyPressEvent(QKeyEvent* event)
         }
         std::cout << "bas" << std::endl;
         */
-        //currGame->use();
         break;
     case Qt::Key_Up:
         if (this->numero == 4) {
@@ -68,7 +62,6 @@ void GameWindow::keyPressEvent(QKeyEvent* event)
         else {
             ((Client*)this->conn)->envoyerDeplacement(this->numero, "H");
         }
-        //this->game->move(CartesianPosition::SAUT);
         break;
     case Qt::Key_Left:
         if (this->numero == 4) {
@@ -79,7 +72,6 @@ void GameWindow::keyPressEvent(QKeyEvent* event)
             std::cout << "ou la" << std::endl;
             ((Client*)this->conn)->envoyerDeplacement(this->numero, "G");
         }
-        //this->game->move(CartesianPosition::GCHE);
         break;
     case Qt::Key_Right:
         if (this->numero == 4) {
@@ -88,10 +80,14 @@ void GameWindow::keyPressEvent(QKeyEvent* event)
         else {
             ((Client*)this->conn)->envoyerDeplacement(this->numero, "R");
         }
-        //this->game->move(CartesianPosition::DRTE);
         break;
     default:
         // On ne fait rien si la touche utilisée n'est pas affectée à une action
         break;
     }
+}
+
+plateauWidget* GameWindow::getPW(int numero)
+{
+    return pws->at(numero);
 }

@@ -73,12 +73,12 @@ void Client::recevoirInstruction()
 
 void Client::analyserInstruction(QString instruction)
 {
-    std::cout << "client arrive ici avec : " << instruction.toStdString() << std::endl;
     QStringList list = instruction.split(";");
 
     if (list.size() == 0)
         return;
 
+    std::cout << "client reçoit " << instruction.toStdString() << std::endl;
     switch(list.at(0).toInt())
     {
         // instruction de connexion / envoie de pseudo
@@ -95,8 +95,7 @@ void Client::analyserInstruction(QString instruction)
         break;
         // instruction déplacement joueur / id joueur / nouveau x / nouveau y
     case 3:
-        std::cout << "j'ai recu position " << std::endl;
-        gw->getGame()->getPositionJoueur(gw->getGame()->getPlayerNumero()).push(CartesianPosition(list.at(1).toInt(),list.at(2).toInt()));
+        gw->getGame()->getPositionJoueur(gw->getGame()->getPlayerNumero())->push(CartesianPosition(list.at(1).toInt(),list.at(2).toInt()));
         break;
     }
 }

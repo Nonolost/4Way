@@ -2,7 +2,7 @@
 
 #include "plateauWidget.h"
 
-plateauWidget::plateauWidget(QWidget *parent, Tile **map,int i)
+plateauWidget::plateauWidget(QWidget *parent, Tile **map,int i, CartesianPosition cp)
     : QWidget(parent),player(i)
 {
     tmap = map;
@@ -11,7 +11,7 @@ plateauWidget::plateauWidget(QWidget *parent, Tile **map,int i)
     dico["rouge"] = 2;
     dico["jaune"] = 3;
     dico["bleu"] = 4;
-    pos = CartesianPosition(0,0);
+    pos = cp;
     setPalette(QPalette(QColor(250, 250, 250)));
     setAutoFillBackground(true);
 }
@@ -134,4 +134,9 @@ QRect plateauWidget::playerRect() {
 
     QRect res(pos.getX(),pos.getY(),taille/2-1,taille-1);
     return res;
+}
+
+void plateauWidget::changePos(CartesianPosition pos)
+{
+    this->pos = pos;
 }
