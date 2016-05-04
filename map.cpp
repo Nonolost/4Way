@@ -175,7 +175,6 @@ CartesianPosition tilemap::nextPos(int joueur, CartesianPosition curr, Cartesian
     int x = curr.getX();
     int y = curr.getY();
     bool floor = isOnFloor(joueur,curr);
-    //if (curr == last) return curr; // !
     switch(mouv){
     case 'd' :
         if(floor){
@@ -229,9 +228,9 @@ CartesianPosition tilemap::nextPos(int joueur, CartesianPosition curr, Cartesian
         else if(curr.getX() > last.getX()) i = -1;
         else i = 1;
 
-        res = CartesianPosition(x+i,y+1);
+        res = CartesianPosition(x+i,y-1);
         if(isValide(joueur, res)) return res;
-        else return err; // bloqué chute ?
+        else return CartesianPosition(x,y+1); // bloqué chute ?
         break;
     default :
         break;
