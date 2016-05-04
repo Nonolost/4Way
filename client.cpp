@@ -3,21 +3,32 @@
 #include <QTcpSocket>
 #include <iostream>
 #include "clientwidget.h"
-
+/**
+ * @brief Client::Client
+ * @param parent
+ */
 Client::Client(QObject* parent): Connexion(parent), blockSize(0)
 {
     client = new QTcpSocket(this);
-    //connect(client, SIGNAL(connected()),
-    //        this, SLOT(verifierConnexion()));
     connect(client, SIGNAL(error(QAbstractSocket::SocketError))
             , this, SLOT(erreurConnexion()));
 }
 
+/**
+ * @brief Client::~Client
+ */
 Client::~Client()
 {
     client->close();
 }
 
+/**
+ * @brief Client::start
+ * @param address
+ * @param port
+ * @param pseudo
+ * essaye de se connecter au serveur
+ */
 void Client::start(QString address, quint16 port, QString pseudo)
 {
     QHostAddress addr(address);
@@ -27,6 +38,11 @@ void Client::start(QString address, quint16 port, QString pseudo)
     this->pseudo = pseudo;
 }
 
+/**
+ * @brief Client::verifierConnexion
+ * @param buffer
+ * verifie le resultat de la connection
+ */
 void Client::verifierConnexion(const char* buffer) {
     if (strcmp(buffer,"nop") == 0)
         cw->setEtat("Connexion refusée, trop de joueurs");
@@ -42,26 +58,26 @@ void Client::verifierConnexion(const char* buffer) {
         cw->setEtat("Connexion réussie, en attente du lancement");
     }
 }
-
+/**
+ * @brief Client::close
+ */
 void Client::close()
 {
     client->close();
 }
 
+/**
+ * @brief Client::erreurConnexion
+ */
 void Client::erreurConnexion()
 {
     std::cout << "erreur dans la connexion " << std::endl;
 }
 
-/*
-void Client::recevoirInstruction()
-{
-    char buffer[1] = {0};
-    client->read(buffer, client->bytesAvailable());
-
-
-}*/
-
+/**
+ * @brief Client::recevoirInstruction
+ * recupere une instruction
+ */
 void Client::recevoirInstruction()
 {
     char buffer[1020] = {0};
@@ -72,6 +88,11 @@ void Client::recevoirInstruction()
     analyserInstruction(QString::fromUtf8(buffer));
 }
 
+/**
+ * @brief Client::analyserInstruction
+ * @param instruction
+ * traite une instruction
+ */
 void Client::analyserInstruction(QString instruction)
 {
     QStringList list = instruction.split(";");
@@ -97,14 +118,17 @@ void Client::analyserInstruction(QString instruction)
         // instruction déplacement joueur / id joueur / nouveau x / nouveau y
     case 3:
         std::cout << "recu pos" << std::endl;
-        //gw->getGame()->getPositionJoueur(gw->getGame()->getPlayerNumero())->push(CartesianPosition(list.at(1).toInt(),list.at(2).toInt()));
+
         break;
     case 4:
         std::cout << "petit test client " << list.at(1).toInt() << std::endl;
         break;
     }
 }
-
+/**
+ * @brief Client::lancerPartie
+ * @param numero
+ */
 void Client::lancerPartie(int numero)
 {
     gw = new GameWindow(0, this, numero);
@@ -112,7 +136,12 @@ void Client::lancerPartie(int numero)
     gw->show();
 }
 
-
+/**
+ * @brief Client::envoyerDeplacement
+ * @param numero
+ * @param direction
+ * envoi le numero du joueur et sa direction
+ */
 void Client::envoyerDeplacement(int numero, string direction)
 {
     char buffer[1020] = {0};

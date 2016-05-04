@@ -4,6 +4,11 @@
 #include <QLabel>
 #include <iostream>
 
+/**
+ * @brief ClientWidget::ClientWidget
+ * @param parent
+ * @param client objet Client lié au Widget
+ */
 ClientWidget::ClientWidget(QWidget *parent, Client *client)
     : QWidget(parent)
 {
@@ -51,6 +56,10 @@ ClientWidget::ClientWidget(QWidget *parent, Client *client)
     setLayout(vlay);
 }
 
+/**
+ * @brief ClientWidget::checkSaisie
+ * verifie si les information on été rentré pour activer le bouton de validation
+ */
 void ClientWidget::checkSaisie()
 {
     if (ip_serveur->text() != "" && port_serveur->text() != "" && pseudo->text() != "")
@@ -59,16 +68,27 @@ void ClientWidget::checkSaisie()
         connexion_bouton->setEnabled(false);
 }
 
+/**
+ * @brief ClientWidget::startConnexion
+ * essaye de se connecter au serveur
+ */
 void ClientWidget::startConnexion()
 {
     client->start(ip_serveur->text(), port_serveur->text().toUInt(), pseudo->text());
 }
 
+/**
+ * @brief ClientWidget::closeConnexion
+ */
 void ClientWidget::closeConnexion()
 {
     client->close();
 }
 
+/**
+ * @brief ClientWidget::setEtat
+ * @param etat
+ */
 void ClientWidget::setEtat(QString etat)
 {
 }

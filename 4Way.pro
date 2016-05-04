@@ -20,7 +20,6 @@ SOURCES += \
     clientwidget.cpp \
     connexion.cpp \
     gamewindow.cpp \
-    mapwidget.cpp \
     concurrentqueue.cpp \
     plateauWidget.cpp
 
@@ -42,7 +41,6 @@ HEADERS += \
     clientwidget.h \
     connexion.h \
     gamewindow.h \
-    mapwidget.h \
     concurrentqueue.h \
     plateauWidget.h
 

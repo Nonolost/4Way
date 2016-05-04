@@ -2,7 +2,9 @@
 
 
 
-
+/**
+ * @brief tilemap::tilemap
+ */
 tilemap::tilemap()
 {
     //tiles = new Tile*[10*10];
@@ -115,7 +117,11 @@ tilemap::tilemap()
 }
 
 
-
+/**
+ * @brief tilemap::action
+ * @param t Case de type Usable
+ * change les cases de la même couleur
+ */
 void tilemap::action(Tile* t){
     std::string couleur = t->getCouleur();
     std::vector<std::pair<int,int>> tar = reinterpret_cast<Usable*>(t)->getTarget();
@@ -129,17 +135,38 @@ void tilemap::action(Tile* t){
         it++;
     }
 }
+/**
+ * @brief tilemap::getMap
+ * @return la map des tableaux
+ */
 std::map<int, Tile **> tilemap::getMap(){
     return tiles;
 }
+/**
+ * @brief tilemap::getMap
+ * @param joueur numero du joueur
+ * @return le tableau du joueur
+ */
 Tile ** tilemap::getMap(int joueur){
     return tiles[joueur];
 }
 
+/**
+ * @brief tilemap::at
+ * @param joueur
+ * @param cp
+ * @return la tile du joueur
+ */
 Tile* tilemap::at(int joueur,CartesianPosition cp)
 {
     return tiles[joueur][(10-cp.getY())*10+cp.getX()];
 }
+/**
+ * @brief tilemap::isValide
+ * @param joueur
+ * @param cp
+ * @return retourn si la position potentiel du joueur est valide
+ */
 bool tilemap::isValide(int joueur,CartesianPosition cp)
 {
     bool res;
@@ -157,6 +184,13 @@ bool tilemap::isValide(int joueur,CartesianPosition cp)
     }
     return res;
 }
+
+/**
+ * @brief tilemap::isOnFloor
+ * @param joueur
+ * @param cp
+ * @return si le joueur touche le sol
+ */
 bool tilemap::isOnFloor(int joueur,CartesianPosition cp)
 {
     bool res;
@@ -169,6 +203,14 @@ bool tilemap::isOnFloor(int joueur,CartesianPosition cp)
     res = res && cp.getY()%20 == 0;
     return res;
 }
+/**
+ * @brief tilemap::nextPos
+ * @param joueur
+ * @param curr position courente
+ * @param last derniere position calculer
+ * @param mouv ordre de mouvement
+ * @return la position suivante
+ */
 CartesianPosition tilemap::nextPos(int joueur, CartesianPosition curr, CartesianPosition last, char mouv){
     CartesianPosition res;
     CartesianPosition err = CartesianPosition(-1,-1);

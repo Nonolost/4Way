@@ -28,13 +28,18 @@ MenuWindow::MenuWindow(QWidget *parent) : QWidget(parent)
 
     vlay->addLayout(vlay_bouton);
 }
-
+/**
+ * @brief MenuWindow::preparerServeur
+ */
 void MenuWindow::preparerServeur()
 {
     conn = new Server();
     vlay->addWidget(new ServeurWidget(this, (Server*) conn));
 }
 
+/**
+ * @brief MenuWindow::preparerClient
+ */
 void MenuWindow::preparerClient()
 {
     conn = new Client();

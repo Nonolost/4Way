@@ -1,10 +1,14 @@
 #include "gamewindow.h"
-#include "mapwidget.h"
 #include "game.h"
 #include "server.h"
 #include "client.h"
 #include <QGridLayout>
-
+/**
+ * @brief GameWindow::GameWindow
+ * @param parent
+ * @param connexion
+ * @param numero
+ */
 GameWindow::GameWindow(QWidget *parent, Connexion *connexion, int numero) : QWidget(parent)
 {
     if (numero == 4)
@@ -27,11 +31,7 @@ GameWindow::GameWindow(QWidget *parent, Connexion *connexion, int numero) : QWid
     gl->addWidget(pws->at(1),0,1);
     gl->addWidget(pws->at(2),1,0);
     gl->addWidget(pws->at(3),1,1);
-/*
-    for (int i = 0; i < 4; i++) {
-        UpdatePosition *up = new UpdatePosition(this,i);
-        up->start();
-    }*/
+
 }
 
 Game* GameWindow::getGame()
@@ -39,21 +39,17 @@ Game* GameWindow::getGame()
     return this->game;
 }
 
+/**
+ * @brief GameWindow::keyPressEvent
+ * @param event
+ * traitement de l'enfoncement des boutons
+ */
 void GameWindow::keyPressEvent(QKeyEvent* event)
 {
     std::cout << "test" << std::endl;
 
     switch (event->key()) {
     case Qt::Key_Down:
-        /*
-        if (this->numero = 4) {
-            ((Server*)this->conn)->
-        }
-        else {
-
-        }
-        std::cout << "bas" << std::endl;
-        */
         break;
     case Qt::Key_Up:
         if (this->numero == 4) {
@@ -87,6 +83,11 @@ void GameWindow::keyPressEvent(QKeyEvent* event)
     }
 }
 
+/**
+ * @brief GameWindow::getPW
+ * @param numero numero du joueur
+ * @return le plateauWidget du joueur
+ */
 plateauWidget* GameWindow::getPW(int numero)
 {
     return pws->at(numero);

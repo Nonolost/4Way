@@ -33,25 +33,10 @@ class MonThreadCustom : public QThread
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
-    //MainWindow w;
-    QPushButton button("Tout");
-    //w.setCentralWidget(&button);
 
-    //w.show();
-
-    //tilemap m = tilemap();
-
-    tilemap* m = new tilemap();
-
-    //GameWindow *gw = new GameWindow();
-    //gw->show();
 
     MenuWindow menu_window;
     menu_window.show();
-
-   // GameWindow gw;
-   // gw.show();
-
 
     return app.exec();
 
