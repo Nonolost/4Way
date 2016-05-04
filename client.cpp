@@ -68,6 +68,7 @@ void Client::recevoirInstruction()
 
     client->read(buffer, client->bytesAvailable());
 
+    std::cout << "recu :  " << buffer << std::endl;
     analyserInstruction(QString::fromUtf8(buffer));
 }
 
@@ -95,7 +96,11 @@ void Client::analyserInstruction(QString instruction)
         break;
         // instruction déplacement joueur / id joueur / nouveau x / nouveau y
     case 3:
-        gw->getGame()->getPositionJoueur(gw->getGame()->getPlayerNumero())->push(CartesianPosition(list.at(1).toInt(),list.at(2).toInt()));
+        std::cout << "recu pos" << std::endl;
+        //gw->getGame()->getPositionJoueur(gw->getGame()->getPlayerNumero())->push(CartesianPosition(list.at(1).toInt(),list.at(2).toInt()));
+        break;
+    case 4:
+        std::cout << "petit test client " << list.at(1).toInt() << std::endl;
         break;
     }
 }

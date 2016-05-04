@@ -106,26 +106,13 @@ private:
             else
                 lastPos = pos;
 
-            int dirX=0;
-            int dirY=0;
 
-            if (deplacement == "D")
-                dirX+=1;
-            else if (deplacement == "G")
-                dirX-=1;
-            else if (pos.getX() < lastPos.getX())
-                dirX+=1;
-            else if (pos.getX() > lastPos.getX())
-                dirX-=1;
-
-            if (deplacement == "H")
-                dirY+=1;
 
             for (int i =0; i < 60; i++) {
                 // on vérifie que la position est bonne
-                if(true) {
-                    CartesianPosition nouvellePosition = CartesianPosition(lastPos.getX()+dirX,lastPos.getY()+dirY);
-
+                CartesianPosition nouvellePosition = this->game->getPlateau()->nextPos(numero, pos, lastPos, deplacement.at(0));
+                std::cout << "position calculee : " << nouvellePosition.getX() << " et " << nouvellePosition.getY() << std::endl;
+                if(this->game->getPlateau()->isValide(numero, nouvellePosition)) {
                     this->game->getPositionJoueur(this->numero)->push(nouvellePosition);
                     for (int i =0; i < 3; i++) {
                             char buffer[1020] = {0};
