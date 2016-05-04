@@ -21,6 +21,7 @@ public:
     Tile* at(int joueur, CartesianPosition);
     bool isValide(int joueur, CartesianPosition cp);
     bool isOnFloor(int joueur, CartesianPosition cp);
+    CartesianPosition nextPos(int joueur, CartesianPosition curr, CartesianPosition last, char mouv);
 private:
     std::map<int,Tile **> tiles;
 };

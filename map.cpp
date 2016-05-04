@@ -169,3 +169,75 @@ bool tilemap::isOnFloor(int joueur,CartesianPosition cp)
     res = res && cp.getY()%20 == 0;
     return res;
 }
+CartesianPosition tilemap::nextPos(int joueur, CartesianPosition curr, CartesianPosition last, char mouv){
+    CartesianPosition res;
+    CartesianPosition err = CartesianPosition(-1,-1);
+    int x = curr.getX();
+    int y = curr.getY();
+    bool floor = isOnFloor(joueur,curr);
+    //if (curr == last) return curr; // !
+    switch(mouv){
+    case 'd' :
+        if(floor){
+            res = CartesianPosition(x+1,y);
+            if(isValide(joueur,res)){
+                return res;
+            }else{
+                return err;
+            }
+        }else{
+            if(curr.getX() == last.getX()){
+                res = CartesianPosition(x,y+1);
+                return res;
+            }else{
+                res = CartesianPosition(x+1,y+1);
+                if(isValide(joueur,res)){
+                    return res;
+                }else{
+                    res = CartesianPosition(x,y+1);
+                    return res;
+                }
+            }
+        }
+        break;
+    case 'g' :
+        if(floor){
+            res = CartesianPosition(x-1,y);
+            if(isValide(joueur,res)){
+                return res;
+            }else{
+                return err;
+            }
+        }else{
+            if(curr.getX() == last.getX()){
+                res = CartesianPosition(x,y+1);
+                return res;
+            }else{
+                res = CartesianPosition(x-1,y+1);
+                if(isValide(joueur,res)){
+                    return res;
+                }else{
+                    res = CartesianPosition(x,y+1);
+                    return res;
+                }
+            }
+        }
+        break;
+    case 'h' :
+        int i;
+        if(curr.getX() == last.getX()) i = 0;
+        else if(curr.getX() > last.getX()) i = -1;
+        else i = 1;
+
+        res = CartesianPosition(x+i,y+1);
+        if(isValide(joueur, res)) return res;
+        else return err; // bloqué chute ?
+        break;
+    default :
+        break;
+    }
+
+
+
+    return err;
+}
