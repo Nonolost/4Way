@@ -10,9 +10,9 @@ class plateauWidget : public QWidget
     Q_OBJECT
 
 public:
-    plateauWidget(QWidget *parent = 0, Tile** map = nullptr,int i=0);
+    plateauWidget(QWidget *parent = 0, Tile** map = nullptr,int i=0, CartesianPosition cp=CartesianPosition());
 
-
+    void changePos(CartesianPosition pos);
 public slots:
     void movePlayer();
 

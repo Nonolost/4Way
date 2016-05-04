@@ -13,11 +13,11 @@ Game::Game(int numero)
     players[2] = new Player();
     players[3] = new Player();
     plateaux = new tilemap();
-    positions = QList<std::queue<CartesianPosition>>();
-    positions.append(std::queue<CartesianPosition>());
-    positions.append(std::queue<CartesianPosition>());
-    positions.append(std::queue<CartesianPosition>());
-    positions.append(std::queue<CartesianPosition>());
+    positions = new QList<concurrency::concurrent_queue<CartesianPosition>*>();
+    positions->append(new concurrency::concurrent_queue<CartesianPosition>());
+    positions->append(new concurrency::concurrent_queue<CartesianPosition>());
+    positions->append(new concurrency::concurrent_queue<CartesianPosition>());
+    positions->append(new concurrency::concurrent_queue<CartesianPosition>());
 
     //positions.push(CartesianPosition(1,0));
 }

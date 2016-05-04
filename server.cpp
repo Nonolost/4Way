@@ -32,6 +32,18 @@ Server::Server(QObject* parent)
     connect(mapper, SIGNAL(mapped(int)), this, SLOT(startRead(int)));
 
     server->listen();
+
+    mutexes = new QList<std::mutex*>();
+
+    mutexes->append(new std::mutex());
+    mutexes->append(new std::mutex());
+    mutexes->append(new std::mutex());
+    mutexes->append(new std::mutex());
+
+    mutexes->at(0)->lock();
+    mutexes->at(1)->lock();
+    mutexes->at(2)->lock();
+    mutexes->at(3)->lock();
 }
 
 /**
@@ -172,6 +184,18 @@ void Server::envoyerInstructionDemarrerPartie()
     }
 }
 
+
+
+/**
+ * @brief Server::atest
+ * @param numero
+ * @param buffer
+ */
+void Server::atest(int numero, const char*buffer)
+{
+    clients->at(numero)->write(buffer, sizeof(buffer));
+}
+
 /**
  * @brief Server::sendNouvellePosition
  * @param numero numero du client
@@ -180,7 +204,7 @@ void Server::envoyerInstructionDemarrerPartie()
 void Server::sendNouvellePosition(int numero, const char* buffer)
 {
     std::cout << "serveur envoie pos " << buffer << " a " << numero << std::endl;
-    clients->at(numero)->write("test",5);
+
     clients->at(numero)->write(buffer,sizeof(buffer));
 }
 /**
@@ -192,7 +216,7 @@ void Server::ajouterDeplacement(int numero, string direction)
 {
     std::cout << "j'ajoute pour " << numero << " le déplacement : " << direction << std::endl;
     this->deplacements->at(numero)->push(direction);
-    std::cout << "nb déplacement now : " << this->deplacements->at(numero)->unsafe_size() << std::endl;
+    this->mutexes->at(numero)->unlock();
 }
 /**
  * @brief Server::initThreads
