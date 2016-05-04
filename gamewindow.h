@@ -51,12 +51,29 @@ class GameWindow : public QWidget
     };
 
 public:
+    /**
+     * @brief GameWindow::GameWindow
+     * @param parent
+     * @param connexion
+     * @param numero
+     */
     GameWindow(QWidget *parent = 0, Connexion *connexion = 0, int numero = -1);
 
     Game* getGame();
+
+    /**
+     * @brief GameWindow::getPW
+     * @param numero numero du joueur
+     * @return le plateauWidget du joueur
+     */
     plateauWidget *getPW(int numero);
 
 public slots:
+    /**
+     * @brief GameWindow::keyPressEvent
+     * @param event
+     * traitement de l'enfoncement des boutons
+     */
     void keyPressEvent(QKeyEvent* event);
 
 private:

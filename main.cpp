@@ -23,11 +23,11 @@ class MonThreadCustom : public QThread
    private:
       void run()
       {
-          std::cout << "test" << std::endl;
+
           for (int i = 0; i < 1000000; i++) {
               test.push(i);
           }
-          std::cout << "test2" << std::endl;
+
       }
 };
 

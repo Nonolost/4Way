@@ -109,7 +109,6 @@ void Server::startRead(int index)
     QStringList list = instruction.split(";");
 
 
-    std::cout << "serveur viens la avec : " << instruction.toStdString() << std::endl;
     switch(list.at(0).toInt())
     {
     case 0:
@@ -203,7 +202,6 @@ void Server::atest(int numero, const char*buffer)
  */
 void Server::sendNouvellePosition(int numero, const char* buffer)
 {
-    std::cout << "serveur envoie pos " << buffer << " a " << numero << std::endl;
 
     clients->at(numero)->write(buffer,sizeof(buffer));
 }
@@ -214,7 +212,6 @@ void Server::sendNouvellePosition(int numero, const char* buffer)
  */
 void Server::ajouterDeplacement(int numero, string direction)
 {
-    std::cout << "j'ajoute pour " << numero << " le déplacement : " << direction << std::endl;
     this->deplacements->at(numero)->push(direction);
     this->mutexes->at(numero)->unlock();
 }
@@ -229,7 +226,6 @@ void Server::initThreads()
         cp->start();
     }
 
-    std::cout << "j'ai tout init les threads" << std::endl;
 }
 
 /**

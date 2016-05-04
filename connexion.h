@@ -7,6 +7,10 @@ class Connexion : public QObject
 {
     Q_OBJECT
 public:
+    /**
+     * @brief Connexion::Connexion
+     * @param parent
+     */
     Connexion(QObject *parent = 0);
 };
 

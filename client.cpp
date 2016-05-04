@@ -84,7 +84,6 @@ void Client::recevoirInstruction()
 
     client->read(buffer, client->bytesAvailable());
 
-    std::cout << "recu :  " << buffer << std::endl;
     analyserInstruction(QString::fromUtf8(buffer));
 }
 
@@ -100,7 +99,6 @@ void Client::analyserInstruction(QString instruction)
     if (list.size() == 0)
         return;
 
-    std::cout << "client reçoit " << instruction.toStdString() << std::endl;
     switch(list.at(0).toInt())
     {
         // instruction de connexion / envoie de pseudo
@@ -109,7 +107,6 @@ void Client::analyserInstruction(QString instruction)
         break;
         // instruction lancement partie / récupération numéro joueur
     case 1:
-        std::cout << "je lance en " << list.at(1).toInt() << std::endl;
         lancerPartie(list.at(1).toInt());
         break;
         // instruction action levier / couleur levier
@@ -117,11 +114,9 @@ void Client::analyserInstruction(QString instruction)
         break;
         // instruction déplacement joueur / id joueur / nouveau x / nouveau y
     case 3:
-        std::cout << "recu pos" << std::endl;
 
         break;
     case 4:
-        std::cout << "petit test client " << list.at(1).toInt() << std::endl;
         break;
     }
 }

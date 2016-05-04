@@ -46,7 +46,6 @@ Game* GameWindow::getGame()
  */
 void GameWindow::keyPressEvent(QKeyEvent* event)
 {
-    std::cout << "test" << std::endl;
 
     switch (event->key()) {
     case Qt::Key_Down:
@@ -61,11 +60,9 @@ void GameWindow::keyPressEvent(QKeyEvent* event)
         break;
     case Qt::Key_Left:
         if (this->numero == 4) {
-            std::cout << "ici" << std::endl;
             ((Server*)this->conn)->ajouterDeplacement(this->numero, "G");
         }
         else {
-            std::cout << "ou la" << std::endl;
             ((Client*)this->conn)->envoyerDeplacement(this->numero, "G");
         }
         break;

@@ -32,19 +32,53 @@ public:
     quint16 getPort();
 
     void setServeurWidget(ServeurWidget *sw);
+
+    /**
+     * @brief Server::getPseudosClients
+     * @return liste des noms des clients
+     */
     QList<QString>* getPseudosClients();
 
+    /**
+     * @brief Server::envoyerInstructionDemarrerPartie
+     * informe les clients que la partie commence
+     */
     void envoyerInstructionDemarrerPartie();
 
+    /**
+     * @brief Server::ajouterDeplacement
+     * @param numero numero du joueur
+     * @param direction nouvelle direction du joueur
+     */
     void ajouterDeplacement(int numero, string direction);
+
+    /**
+     * @brief Server::initThreads
+     * initialise les Threads de calcul de position
+     */
     void initThreads();
     void Server::initGame(Game* game);
 
     std::mutex* getMutex(int numero) { return mutexes->at(numero); }
 
 public slots:
+    /**
+     * @brief Server::acceptConnection
+     * accepte une connection si il reste de la place
+     */
     void acceptConnection();
+
+    /**
+     * @brief Server::startRead
+     * @param index
+     * traite les instructions
+     */
     void startRead(int index);
+
+    /**
+     * @brief Server::closeConnection
+     * ferme la connection avec un client
+     */
     void closeConnection();
     void sendNouvellePosition(int numero, const char* pos);
     void atest(int numero, const char* buffer);
@@ -86,7 +120,6 @@ private:
 
     void run()
     {
-        std::cout << "execut" << std::endl;
 
         while(true) {
             string deplacement;
@@ -95,13 +128,12 @@ private:
 
             deplacements->try_pop(deplacement);
 
-            std::cout << "apparement j'ai vu recup un deplacement " << this->numero << std::endl;
             CartesianPosition lastPos;
             CartesianPosition pos = this->game->getPlayer(this->numero)->getPos();
 
             if (this->game->getPositionJoueur(this->numero)->unsafe_size() > 0) {
                 lastPos = *(this->game->getPositionJoueur(numero)->unsafe_end());
-                std::cout << "ici " << std::endl;
+
             }
             else
                 lastPos = pos;
@@ -111,7 +143,6 @@ private:
             for (int i =0; i < 60; i++) {
                 // on vérifie que la position est bonne
                 CartesianPosition nouvellePosition = this->game->getPlateau()->nextPos(numero, pos, lastPos, deplacement.at(0));
-                std::cout << "position calculee : " << nouvellePosition.getX() << " et " << nouvellePosition.getY() << std::endl;
                 if(this->game->getPlateau()->isValide(numero, nouvellePosition)) {
                     this->game->getPositionJoueur(this->numero)->push(nouvellePosition);
                     for (int i =0; i < 3; i++) {
@@ -122,9 +153,8 @@ private:
                             strcat(buffer,";");
                             strcat(buffer,std::to_string(nouvellePosition.getY()).c_str());
 
-                            //std::cout << "etcici"<< std::endl;
+
                             emit Write(i, buffer);
-                            //serveur->sendNouvellePosition(i, nouvellePosition);
                     }
                     lastPos = nouvellePosition;
                 }
